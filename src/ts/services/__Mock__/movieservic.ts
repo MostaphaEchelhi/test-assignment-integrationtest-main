@@ -1,9 +1,15 @@
+/** 
+* @jest-enviroment jsdom 
+*/ 
+
+
 import { IMovie } from "../../models/Movie";
 
 
 
 
-let movies:IMovie[] = [
+
+export let movies:IMovie[] = [
     {
     Title: "Nyckel till friheten",
     imdbID: "tt0111161",
@@ -33,16 +39,14 @@ let movies:IMovie[] = [
     Year: "1974"
     }
 
-];  jest.mock("axios", () => ({                             
-    get: async (url: string) => {
-        return new Promise ((resolve, reject) => {
-            if (!url.endsWith("error")) {
-                resolve (movies);
-            }
-            else {
-                reject([]);
-            }
-        });
-    }
-}));
+];  
 
+export async function getData (SearchText: string): Promise<IMovie[]> {
+    return new Promise((resolve, reject)=>{
+        if (SearchText !== "error") {
+        resolve(movies);
+      } else {
+        reject ([]);
+      }
+    }); 
+}
